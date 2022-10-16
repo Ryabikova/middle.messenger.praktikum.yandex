@@ -1,0 +1,30 @@
+<div class="page-main singUp bg-grey">
+    <div class="singUp__container">
+        <h1 class="singUp__titel h1">Зарегистрироваться</h1>
+        <div class="singUp__input">
+                {{> input type="text" name="email"}}
+        </div>
+        <div class="singUp__input">
+                {{> input type="text" name="login"}}
+        </div>
+        <div class="singUp__input">
+                {{> input type="text" name="name"}}
+        </div>
+        <div class="singUp__input">
+                {{> input type="text" name="surname"}}
+        </div>
+        <div class="singUp__input">
+                {{> input type="text" name="tel"}}
+        </div>
+        <div class="singUp__input">
+                {{> input type="password" name="pswd"}}
+        </div>
+        <div class="singUp__input">
+                {{> input type="password" name="repswd"}}
+        </div>
+        <div class="singUp__btn-container">
+            {{> button lable="Авторизоваться" href="/#/chats"}}
+            <a href="/#/auth">Войти</a>
+        </div>
+    </div>
+</div>
