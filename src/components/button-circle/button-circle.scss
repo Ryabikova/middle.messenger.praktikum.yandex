@@ -1,0 +1,17 @@
+.button-circle {
+    width: 32px;
+    height: 32px;
+    padding: 16px 0;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #024058;
+    color: #fff;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 15px;
+}

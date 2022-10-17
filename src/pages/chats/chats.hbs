@@ -1,4 +1,18 @@
-<div class="page-main chats">
-    <div class="chats__list"> list chats</div>
-    <div class="chats__message">message</div>
+
+<div class="page-main chats bg-grey">
+    <div class="chats__list-container"> 
+        <div class="chats__top">
+            <a class="chats__link link" href="/#/profile">Профиль</a>
+            
+            {{> search}}
+        </div>
+        <ul class="chats__list">
+        {{#each chats}}
+            <li>
+                {{> chat}}
+            </li>
+        {{/each}}
+        </ul>
+    </div>
+    <div class="chats__message-container">message</div>
 </div>

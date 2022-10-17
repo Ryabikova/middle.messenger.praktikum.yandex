@@ -1,7 +1,32 @@
 <div class="page-main profile">
-    <div class="profile__link-back">link-back</div>
+    <div class="profile__link-back">
+        <a>
+            {{> button-circle }}
+        </a>
+    </div>
     <div class="profile__container">
-        <div class="profile__avatar">avatar</div>
-        <div class="profile__info">info</div>
+        <div class="profile__avatar-container">
+            <div class="profile__avatar">
+                <i class="fa-solid fa-camera"></i>
+            </div>    
+            <div class="text-defult">Иван</div>
+            <input id="input-img" ref="fileInput" type="file" style="display: none;" accept="image/*" />
+        </div>
+        <div class="profile__info">
+            {{> profile-input type="text" name="login" label="Почта"}}
+            {{> profile-input type="text" name="login" label="Логин"}}
+            {{> profile-input type="text" name="name" label="Имя"}}
+            {{> profile-input type="text" name="surname" label="Фамилия"}}
+            {{> profile-input type="nimber" name="tel" label="Телефон"}}
+            <div class="profile__pswd">
+                <div class="text-defult">Изменить пароль</div>
+                {{> profile-input type="password" name="pswd" label="Пароль"}}
+                {{> profile-input type="password" name="repswd" label="Поаторите пароль"}}
+            </div>
+            <div class="profile__action">
+                {{> button lable="Сохранить"}}
+            </div>
+            
+        </div>
     </div>
 </div>

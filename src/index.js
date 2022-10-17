@@ -9,6 +9,10 @@ import tmpl500 from './pages/500/500.hbs';
 
 import './components/button';
 import './components/input';
+import './components/search';
+import './components/button-circle';
+import './pages/chats';
+import './pages/profile';
 
 import './style/style.scss'
 

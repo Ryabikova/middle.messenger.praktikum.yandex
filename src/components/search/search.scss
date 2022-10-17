@@ -1,0 +1,18 @@
+@import  '../../style/glob/color.scss';
+.Search {
+    width: 100%;
+    display: block;
+    &__wraper {
+
+    }
+    &__input {
+        padding: 0 20px 0 10px;
+        border: none;
+        background-color: $color-gray;
+        border-radius: 5px;
+        height: 32px;
+        &:focus {
+            border: none;
+        }
+    }
+}
