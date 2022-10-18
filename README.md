@@ -11,3 +11,6 @@
 
 ## Ссылка на макет
 https://www.figma.com/file/lGAfjH9GpOxQlBbqshgU4I/Chat?node-id=1%3A616
+
+## Netlify
+https://symphonious-sherbet-3d8ebf.netlify.app/
