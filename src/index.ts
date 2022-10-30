@@ -2,7 +2,6 @@ import homeTmpl from './index.hbs';
 import singInTmpl from './pages/singIn/singIn.hbs';
 import singUpTmpl from './pages/singUp/singUp.hbs';
 import chatsTmpl from './pages/chats/chats.hbs';
-// import messageTmpl from './pages/message/message.hbs';
 import profileTmpl from './pages/profile/profile.hbs';
 import tmpl404 from './pages/404/404.hbs';
 import tmpl500 from './pages/500/500.hbs';
