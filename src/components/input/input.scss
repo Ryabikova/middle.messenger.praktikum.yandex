@@ -1,0 +1,27 @@
+@import  '../../style/glob/color.scss';
+.Input {
+    width: 100%;
+    display: block;
+    &__wraper {
+        position: relative;
+    }
+    &__input {
+        padding: 0 20px 0 10px;
+        height: 42px;
+        border-radius: 2px;
+        border: 1px solid $color-blue-dark;
+        color: $color-black;
+        margin: 0;
+        min-width: 250px;
+    }
+    &__label {
+        background-color: $color-white;
+        margin: 0 0 0 5px;
+        position: absolute;
+        left: 5px;
+        top: -12px;
+        font-weight: 600;
+        font-size: 14px;
+        z-index: 10;
+    }
+}

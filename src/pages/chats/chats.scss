@@ -1,0 +1,19 @@
+@import  '../../style/glob/color.scss';
+.chats {
+    display: flex;
+    &__list-container {
+        width: 20%;
+        background-color: $color-gray-light;
+        padding: 20px 10px 0 10px;
+    }
+    &__message-container {
+        width: 80%;
+        background-color: $color-white;
+    }
+    &__link {
+        color: $color-black;
+        display: flex;
+        justify-content: flex-end;
+        padding-bottom: 20px;
+    }
+}

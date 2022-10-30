@@ -1,0 +1,16 @@
+// @import  '../../style/glob/color.scss';
+.Input-profile {
+    width: 100%;
+    display: block;
+    &__wraper {
+        width: 100%;
+        border-bottom: 1px solid #EAEAEA;
+        padding: 10px 0;
+        display: flex;
+        justify-content: space-between;
+    }
+    &__input{
+        border: none;
+    }
+  
+}
