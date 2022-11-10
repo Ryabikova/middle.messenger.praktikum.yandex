@@ -1,12 +1,13 @@
 import tmpl from './template';
 // import Handlebars from 'handlebars/dist/handlebars.runtime';
-import './search.scss';
+import './nav.scss';
 import Component from '../../modules/component';
 
-// Handlebars.registerPartial('search', template);
-export default class Search extends Component {
+// Handlebars.registerPartial('input', template);
+
+export default class Nav extends Component {
   constructor(props) {
-    super('div', props);
+    super('ul', props);
   }
 
   render() {

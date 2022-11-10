@@ -1,12 +1,12 @@
 import tmpl from './template';
 // import Handlebars from 'handlebars/dist/handlebars.runtime';
-import './search.scss';
-import Component from '../../modules/component';
+import './chat-list.scss';
+import Component from '../../../modules/component';
 
 // Handlebars.registerPartial('search', template);
-export default class Search extends Component {
+export default class ChatList extends Component {
   constructor(props) {
-    super('div', props);
+    super('ul', props);
   }
 
   render() {

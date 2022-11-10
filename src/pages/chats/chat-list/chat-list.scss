@@ -1,0 +1,45 @@
+@import  '../../../style/glob/color.scss';
+
+.chat-list {
+    &__item {
+        display: flex;
+        justify-content: space-between;
+        height: 67px;
+        border-top: solid 1px $color-gray-super-light;
+        padding: 15px 10px;
+    }
+
+    &__flex-container {
+        display: flex;
+        align-items: center;
+    }
+
+    &__avatar {
+        width: 47px;
+        height: 47px;
+        background-color: $color-gray;
+        border-radius: 50%;
+        margin-right: 15px;
+    }
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+    &__name {
+        color: $color-blue-dark;
+    }
+    
+    &__date {
+        color: $color-blue-light;
+    }
+
+    &__count {
+        color: $color-white;
+        background-color: $color-blue-dark;
+        padding: 6px 9px;
+        border-radius: 50%;
+    }
+}

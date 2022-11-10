@@ -1,100 +1,173 @@
-import homeTmpl from './index.hbs';
-import singInTmpl from './pages/singIn/singIn.hbs';
-import singUpTmpl from './pages/singUp/singUp.hbs';
-import chatsTmpl from './pages/chats/chats.hbs';
-import profileTmpl from './pages/profile/profile.hbs';
-import tmpl404 from './pages/404/404.hbs';
-import tmpl500 from './pages/500/500.hbs';
+import FormSingIn from './pages/singIn';
+import FormSingUp from './pages/singUp';
+import Chats from './pages/chats';
+import Profile from './pages/profile';
+import ErrorPage from './pages/error';
+import render from './utils/renderDOM';
 
-import './components/button';
-import './components/input';
-import './components/search';
-import './components/button-circle';
-import './pages/chats';
-import './pages/profile';
+import Button from './components/button';
+import Nav from './components/nav';
+import { gValidation as V } from './utils/validation';
 
-import './style/style.scss'
+import './style/style.scss';
 
-let routes = {};
-let templates = {};
-let app_div = null;
+const routes = {};
+const templates = {};
 
-
-function route (path, template) {
-    if (typeof template === 'function') {
-        return routes[path] = template;
-    }
-    else if (typeof template === 'string') {
-        return routes[path] = templates[template];
-    } else {
-        return;
-    };
-};
-function template (name, templateFunction) {
-    return templates[name] = templateFunction;
-};
+function route(path, template) {
+  if (typeof template === 'function') {
+    return routes[path] = template;
+  }
+  if (typeof template === 'string') {
+    return routes[path] = templates[template];
+  }
+}
+function template(name, templateFunction) {
+  return templates[name] = templateFunction;
+}
 
 template('home', () => {
-    app_div.innerHTML = homeTmpl({ variable: 'Hello world' });
+  const nav = new Nav({
+    class: 'nav',
+    settings: { withInternalID: true },
+    links: [
+      { href: '/#/auth', label: 'Страница авторизации' },
+      { href: '/#/registration', label: 'Страница регистрации' },
+      { href: '/#/chats', label: 'Страница со списком чатов' },
+      { href: '/#/profile', label: 'Страница профиля' },
+      { href: '/#/404', label: 'Страница 404' },
+      { href: '/#/500', label: 'Страница 500' },
+    ],
+  });
+  render('#app', nav);
 });
 
 template('singIn', () => {
-    app_div.innerHTML = singInTmpl({});
+  const singIn = new FormSingIn({
+    attr: {
+      class: 'form',
+    },
+    events: {
+      submit: (e) => {
+        e.preventDefault();
+        const formElement = e.target;
+        const formData = new FormData(formElement);
+        const login = formData.get('login');
+        console.log('login :>> ', login);
+        const password = formData.get('password');
+        console.log('password :>> ', password);
+        if (password.toString() && V.fValidateLogin(login.toString())) {
+          console.log('form: Valid');
+        }
+      },
+    },
+  });
+  render('#app', singIn);
 });
 
 template('singUp', () => {
-    app_div.innerHTML = singUpTmpl({});
+  const singIn = new FormSingUp({
+    attr: {
+      class: 'form',
+    },
+    events: {
+      submit: (e) => {
+        e.preventDefault();
+        const formElement = e.target;
+        const formData = new FormData(formElement);
+        const email = formData.get('email');
+        console.log('email :>> ', email);
+        const login = formData.get('login');
+        console.log('login :>> ', login);
+        const firstName = formData.get('first_name');
+        console.log('firstName :>> ', firstName);
+        const secondName = formData.get('second_name');
+        console.log('secondName :>> ', secondName);
+        const phone = formData.get('phone');
+        console.log('phone :>> ', phone);
+        const password = formData.get('password');
+        console.log('password :>> ', password);
+        const repeatPassword = formData.get('repeat_password');
+        console.log('repeatPassword :>> ', repeatPassword);
+        if (V.fValidatePswd(password.toString()) && V.fValidateLogin(login.toString())
+            && V.fValidateEmail(email.toString()) && V.fValidateName(firstName.toString())
+            && V.fValidateName(secondName.toString()) && V.fValidatePhone(phone.toString())
+            && V.fValidatePswd(repeatPassword.toString())) {
+          console.log('form: Valid');
+        }
+      },
+    },
+  });
+  render('#app', singIn);
 });
 
 template('chats', () => {
-    app_div.innerHTML = chatsTmpl({});
+  const chats = new Chats({});
+  render('#app', chats);
 });
 
-// template('message', () => {
-//     app_div.innerHTML = messageTmpl({});
-// });
-
 template('profile', () => {
-    app_div.innerHTML = profileTmpl({});
+  const profile = new Profile({});
+  render('#app', profile);
 });
 
 template('404', () => {
-    app_div.innerHTML = tmpl404({});
+  const errorPage = new ErrorPage({
+    title: '404',
+    text: 'Страница не найдена',
+    button: new Button({
+      label: 'Назад к чатам',
+      events: {
+        click: () => {
+          window.location.href = '#/chats';
+        },
+      },
+    }),
+  });
+  render('#app', errorPage);
 });
 
 template('500', () => {
-    app_div.innerHTML = tmpl500({});
+  const errorPage = new ErrorPage({
+    title: '500',
+    text: 'Мы уже фиксим',
+    button: new Button({
+      label: 'Назад к чатам',
+      events: {
+        click: () => {
+          window.location.href = '#/chats';
+        },
+      },
+    }),
+  });
+  render('#app', errorPage);
 });
 
 route('/', 'home');
 route('/auth', 'singIn');
 route('/registration', 'singUp');
 route('/chats', 'chats');
-// route('/message', 'message');
 route('/profile', 'profile');
 route('/404', '404');
 route('/500', '500');
 
 function resolveRoute(route) {
-    try {
-        return routes[route];
-    } catch (e) {
-        throw new Error(`Route ${route} not found`);
-    };
-};
+  try {
+    return routes[route];
+  } catch (e) {
+    throw new Error(`Route ${route} not found`);
+  }
+}
 
-function router(evt) {
-    console.log("router")
-    let url = window.location.hash.slice(1) || '/';
-    let route = resolveRoute(url);
+function router() {
+  console.log('router');
+  const url = window.location.hash.slice(1) || '/';
+  const route = resolveRoute(url);
 
-    route();
-};
-
+  route();
+}
 
 window.addEventListener('DOMContentLoaded', () => {
-    app_div = document.querySelector('#app');
-    window.addEventListener('load', router);
-    window.addEventListener('hashchange', router);
+  window.addEventListener('load', router);
+  window.addEventListener('hashchange', router);
 });
-  
