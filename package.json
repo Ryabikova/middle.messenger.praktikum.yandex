@@ -2,10 +2,10 @@
   "name": "middle.messenger.praktikum.yandex",
   "version": "1.0.0",
   "description": "### Откройте pull request в ветку main из ветки, где вы разрабатывали проект, и добавьте ссылку на этот pr в README.md в ветке main.  ### ВАЖНО: pull request должен называться “Sprint i” (i — номер спринта).",
-  "main": "index.js",
+  "source": "src/index.ts",
   "scripts": {
-    "dev": "parcel 'src/index.html' --open",
-    "build": "parcel build src/index.html --no-source-maps --no-cache",
+    "dev": "parcel --open",
+    "build": "parcel build --no-source-maps --no-cache",
     "start": "node ./server.ts"
   },
   "dependencies": {
@@ -14,15 +14,15 @@
   },
   "devDependencies": {
     "@anikin/parcel-transformer-handlebars-precompile": "1.0.1",
-    "@parcel/transformer-sass": "2.7.0",
+    "@parcel/transformer-sass": "^2.8.2",
     "@typescript-eslint/eslint-plugin": "5.41.0",
     "@typescript-eslint/parser": "5.41.0",
-    "eslint-config-airbnb-typescript": "^14.0.1",
     "eslint": "8.26.0",
     "eslint-config-airbnb-base": "15.0.0",
+    "eslint-config-airbnb-typescript": "^14.0.1",
     "eslint-plugin-import": "2.26.0",
     "express": "4.18.1",
-    "parcel": "2.7.0",
+    "parcel": "^2.8.2",
     "sass": "1.37.5",
     "stylelint": "14.14.1",
     "stylelint-config-standard": "29.0.0",
@@ -42,5 +42,10 @@
   "bugs": {
     "url": "https://github.com/Ryabikova/middle.messenger.praktikum.yandex/issues"
   },
-  "homepage": "https://github.com/Ryabikova/middle.messenger.praktikum.yandex#readme"
+  "homepage": "https://github.com/Ryabikova/middle.messenger.praktikum.yandex#readme",
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
 }
