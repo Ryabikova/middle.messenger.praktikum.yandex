@@ -1,11 +1,23 @@
 @import  '../../style/glob/color.scss';
 .Input {
     width: 100%;
-    display: block;
-    &__wraper {
+    // display: inline-block;
+    &__wrapper {
         position: relative;
+        // display: inline-block;
+        
+    }
+    &--error {
+        color: $color-red;
+        .Input__input {
+            border: 1px solid $color-red;
+        }
+        .Input__text-error {
+            display: block;
+        }
     }
     &__input {
+        width: 100%;
         padding: 0 20px 0 10px;
         height: 42px;
         border-radius: 2px;
@@ -23,5 +35,9 @@
         font-weight: 600;
         font-size: 14px;
         z-index: 10;
+    }
+    &__text-error {
+        color: $color-red;
+        display: none;
     }
 }

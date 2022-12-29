@@ -1,11 +1,20 @@
 import tmpl from './template';
-// import Handlebars from 'handlebars/dist/handlebars.runtime';
 import './chat-list.scss';
 import Component from '../../../modules/component';
+import IComponent from '../../../interfaces/interface';
 
-// Handlebars.registerPartial('search', template);
-export default class ChatList extends Component {
-  constructor(props) {
+interface IChat extends IComponent {
+  chats: Array<
+    {
+      avatar: string;
+      chatName: string;
+      date: string;
+      count: string;
+    }
+  >
+}
+export default class ChatList extends Component<IChat> {
+  constructor(props:IChat) {
     super('ul', props);
   }
 

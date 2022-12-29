@@ -2,7 +2,9 @@ const tmpl = `
 {{#each chats}}
         <li class="chat-list__item">
             <div class="chat-list__flex-container">
-                <div class="chat-list__avatar"><img src="{{avatar}}"/></div>
+                <div class="chat-list__avatar">
+                    {{#if avatar}}<img src="{{avatar}}" alt="avatar"/>{{/if}}
+                </div>
                 <p class="chat-list__name text-defult"> {{chatName}}</p>
             </div>
             <div class="chat-list__container">

@@ -1,11 +1,16 @@
 {
-    "noImplicitAny": true,
-
-    "noUnusedLocals": true,
-
-    "noUnusedParameters": true,
-
-    "sourceMap": true,
-
-    "strictNullChecks": true
+    "compilerOptions": {
+        "module": "commonjs",
+        "outDir": "dist",
+        "target": "es2017",
+        "declaration": false,
+        "noImplicitAny": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "sourceMap": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "strictNullChecks": true
+    }
+    
 }

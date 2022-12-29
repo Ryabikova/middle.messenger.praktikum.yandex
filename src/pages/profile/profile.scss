@@ -21,12 +21,22 @@
         width: 510px;
     }
     &__pswd {
+        width: 100%;
         padding-top: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
     &__action {
         width: 100%;
         padding-top: 20px;
         display: flex;
         justify-content: center;
+    }
+        .Input {
+            margin-bottom: 20px;
+        }
+    .change-avatar {
+        margin-bottom: 20px;
     }
 }

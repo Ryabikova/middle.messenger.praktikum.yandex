@@ -4,7 +4,7 @@ import { v4 as makeUUID } from 'uuid';
 import Handlebars from 'handlebars';
 import EventBus from './event-bus';
 
-export default class Component {
+export default abstract class Component<Props extends Record<string, any> = unknown> {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -12,17 +12,17 @@ export default class Component {
     FLOW_RENDER: 'flow:render',
   };
 
-  _element = null;
+  private _element: HTMLElement | any;
 
-  _meta = null;
+  private _meta: {tagName: string; propsWithChildren:Props};
 
-  _id;
+  private _id: string;
 
-  props;
+  public props:Props;
 
-  children;
+  public children: Props;
 
-  attr;
+  public attr: Record<string, string>;
 
   eventBus;
 
@@ -32,7 +32,7 @@ export default class Component {
    *
    * @returns {void}
    */
-  constructor(tagName = 'div', propsWithChildren: any = {}) {
+  constructor(tagName: string = 'div', propsWithChildren: Props) {
     const eventBus = new EventBus();
     this._meta = {
       tagName,
@@ -52,14 +52,14 @@ export default class Component {
     eventBus.emit(Component.EVENTS.INIT);
   }
 
-  _registerEvents(eventBus) {
+  private _registerEvents(eventBus:EventBus) {
     eventBus.on(Component.EVENTS.INIT, this.init.bind(this));
     eventBus.on(Component.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Component.EVENTS.FLOW_RENDER, this._render.bind(this));
     eventBus.on(Component.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
   }
 
-  _createResources() {
+  private _createResources() {
     const { tagName } = this._meta;
     this._element = this._createDocumentElement(tagName);
   }
@@ -69,7 +69,7 @@ export default class Component {
     this.eventBus().emit(Component.EVENTS.FLOW_RENDER);
   }
 
-  _componentDidMount() {
+  private _componentDidMount() {
     this.componentDidMount();
 
     Object.values(this.children).forEach((child) => {
@@ -77,48 +77,54 @@ export default class Component {
     });
   }
 
-  componentDidMount() {}
+  componentDidMount(): void {
+  }
 
   dispatchComponentDidMount() {
     this.eventBus().emit(Component.EVENTS.FLOW_CDM);
   }
 
-  _componentDidUpdate(oldProps, newProps) {
+  private _componentDidUpdate(oldProps: Props, newProps: Props) {
     const response = this.componentDidUpdate(oldProps, newProps);
     if (response) {
       this.eventBus().emit(Component.EVENTS.FLOW_RENDER);
     }
   }
 
-  componentDidUpdate(oldProps: any, newProps: any): boolean {
+  componentDidUpdate(oldProps: Props, newProps: Props): boolean {
     if (JSON.stringify(oldProps) === JSON.stringify(newProps)) return false;
     return true;
   }
 
-  setProps = (nextProps) => {
+  setProps = (nextProps: Props) => {
     if (!nextProps) {
       return;
     }
-    Object.assign(this.props, nextProps);
+    const { children, props } = this._getChildren(nextProps);
+    if (Object.values(children)) {
+      Object.assign(this.children, children);
+    }
+    if (Object.values(props)) {
+      Object.assign(this.props, props);
+    }
   };
 
   get element() {
     return this._element;
   }
 
-  _render() {
+  private _render() {
     const component = this.render();
     this._removeEvents();
     this._element.innerHTML = ''; // удаляем предыдущее содержимое
-
     this._element.appendChild(component);
     this._addEvents();
     this._addAttr();
   }
 
-  render() {}
+  abstract render():DocumentFragment
 
-  compile(tmpl: string, props: any): DocumentFragment {
+  compile(tmpl: string, props: Props): DocumentFragment {
     const propsAndStubs = { ...props };
     Object.entries(this.children).forEach(([key, child]) => {
       propsAndStubs[key] = `<div data-id="${child._id}"></div>`;
@@ -139,17 +145,18 @@ export default class Component {
     return this.element;
   }
 
-  _makePropsProxy(props: any): any {
+  _makePropsProxy(props: Props) {
     const self = this;
 
     const propsProxy = new Proxy(props, {
-      get(target, prop: string) {
+      get(target: Props, prop: string) {
         const value = target[prop];
         return typeof value === 'function' ? value.bind(target) : value;
       },
-      set(target, prop: string, value) {
-        target[prop] = value;
-        self.eventBus().emit(Component.EVENTS.FLOW_CDU);
+      set(target: Props, prop: string, value) {
+        const oldValue = { ...target };
+        target[prop as keyof Props] = value;
+        self.eventBus().emit(Component.EVENTS.FLOW_CDU, oldValue, target);
         return true;
       },
       deleteProperty() {
@@ -186,15 +193,15 @@ export default class Component {
     });
   }
 
-  _getChildren(propsWithChildren: any): {[key: string]: {}} {
-    const children = {};
-    const props = {};
+  _getChildren(propsWithChildren: Props): {children:Props, props:Props} {
+    const children: Props = <Props>{};
+    const props: Props = <Props>{};
 
     Object.entries(propsWithChildren).forEach(([key, value]) => {
       if (value instanceof Component) {
         children[key] = value;
       } else {
-        props[key] = value;
+        props[key as keyof Props] = value;
       }
     });
     return { children, props };

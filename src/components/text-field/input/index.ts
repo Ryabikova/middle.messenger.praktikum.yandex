@@ -1,10 +1,9 @@
 import tmpl from './template';
 import Component from '../../../modules/component';
+import IComponent from '../../interfaces/interface';
 
-// Handlebars.registerPartial('input', template);
-
-export default class Input extends Component {
-  constructor(props) {
+export default class Input extends Component<IComponent> {
+  constructor(props:IComponent) {
     super('input', props);
   }
 

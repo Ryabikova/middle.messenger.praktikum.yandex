@@ -6,17 +6,19 @@ import Search from '../../components/search';
 import ChatList from './chat-list';
 import Chat from './chat';
 import SendMessage from './send-message';
+import IComponent from '../../interfaces/interface';
 
-export default class Chats extends Component {
-  constructor(props) {
-    super('div', props);
-  }
-
-  render() {
-    this.children.link = new Link({ href: '/#/profile', label: 'Профиль' });
-    this.children.search = new Search({});
-    this.children.chatList = new ChatList({
-      tag: 'ul',
+interface IChats extends IComponent {
+  link?: Link;
+  search?: Search;
+  chatList?: ChatList;
+  chat?: Chat;
+}
+export default class Chats extends Component<IChats> {
+  constructor(props:IChats) {
+    props.link = new Link({ href: '/#/profile', label: 'Профиль' });
+    props.search = new Search({});
+    props.chatList = new ChatList({
       chats: [
         {
           avatar: '',
@@ -38,7 +40,7 @@ export default class Chats extends Component {
         },
       ],
     });
-    this.children.chat = new Chat({
+    props.chat = new Chat({
       attr: {
         class: 'chat',
       },
@@ -49,12 +51,13 @@ export default class Chats extends Component {
         events: {
           submit: (e) => {
             e.preventDefault();
-            const formElement = e.target;
-            const formData = new FormData(formElement);
-            const message = formData.get('message');
-            console.log('message :>> ', message);
-            if (message) {
-              console.log('Valid');
+            const formElement = e.target as HTMLFormElement;
+            if (formElement) {
+              const formData = new FormData(formElement);
+              const message = formData.get('message');
+              if (message) {
+                console.log('message :>> ', message);
+              }
             }
           },
         },
@@ -66,11 +69,10 @@ export default class Chats extends Component {
         },
       ],
     });
-    return this.compile(tmpl, {
-      search: this.props.search,
-      chatList: this.props.chatList,
-      link: this.props.link,
-      chat: this.props.chat,
-    });
+    super('div', props);
+  }
+
+  render() {
+    return this.compile(tmpl, this.props);
   }
 }

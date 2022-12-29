@@ -2,25 +2,33 @@ import tmpl from './template';
 import './text-field.scss';
 import Component from '../../modules/component';
 import Input from './input';
+import IComponent from '../../interfaces/interface';
 
-export default class TextField extends Component {
-  constructor(props) {
-    super('div', props);
+interface ITextField extends IComponent {
+  label?: string;
+  error?: string;
+  type?: string;
+  name?: string;
+  input?: Input;
+}
+export default class TextField extends Component<ITextField> {
+  constructor(props:ITextField) {
+    const attr = {
+      class: 'Input',
+    };
+    props.input = new Input({
+      attr: {
+        class: 'Input__input',
+        type: props.type,
+        name: props.name,
+      },
+      events: props.events,
+    });
+
+    super('div', { attr, ...props });
   }
 
   render() {
-    this.children.input = new Input({
-      attr: {
-        type: this.props.type,
-        name: this.props.name,
-        class: 'Input__input',
-      },
-      events: this.props.events,
-    });
-    return this.compile(tmpl, {
-      input: this.props.input,
-      error: this.props.error,
-      label: this.props.label,
-    });
+    return this.compile(tmpl, this.props);
   }
 }

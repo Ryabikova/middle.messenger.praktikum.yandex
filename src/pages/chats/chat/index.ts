@@ -1,20 +1,24 @@
 import tmpl from './template';
-// import Handlebars from 'handlebars/dist/handlebars.runtime';
 import './chat.scss';
 import Component from '../../../modules/component';
+import IComponent from '../../../interfaces/interface';
+import SendMessage from './send-message';
 
-// Handlebars.registerPartial('search', template);
-export default class Chat extends Component {
-  constructor(props) {
+interface IChat extends IComponent {
+  listMessage: Array<
+    {
+      text: string;
+      date: string;
+    }
+  >
+  sendMessage: SendMessage;
+}
+export default class Chat extends Component<IChat> {
+  constructor(props:IChat) {
     super('div', props);
   }
 
   render() {
-    return this.compile(tmpl, {
-      sendMessage: this.props.sendMessage,
-      events: this.props.events,
-      listMessage: this.props.listMessage,
-      attr: this.props.attr,
-    });
+    return this.compile(tmpl, this.props);
   }
 }

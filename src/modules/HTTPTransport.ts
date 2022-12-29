@@ -19,30 +19,28 @@ function queryStringify(data: object) {
   const keys = Object.keys(data);
   return keys.reduce((result, key, index) => `${result}${key}=${data[key]}${index < keys.length - 1 ? '&' : ''}`, '?');
 }
+// тип метода
+type HTTPMethod = (url: string, options?: OptionsWithoutMethod) => Promise<XMLHttpRequest>
 
 export default class HTTPTransport {
-  get(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
+  get:HTTPMethod = (url, options = {}) => {
     const queryUrl = options.data ? `${url}${queryStringify(options.data)}` : url;
-    return this.request(
-      queryUrl,
-      { ...options, method: METHODS.GET },
-      options.timeout,
-    );
-  }
+    return this.request(queryUrl, { ...options, method: METHODS.GET }, options.timeout);
+  };
 
-  put = (url, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> => this.request(
+  put:HTTPMethod = (url, options = {}) => this.request(
     url,
     { ...options, method: METHODS.PUT },
     options.timeout,
   );
 
-  post = (url, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> => this.request(
+  post:HTTPMethod = (url, options = {}) => this.request(
     url,
     { ...options, method: METHODS.POST },
     options.timeout,
   );
 
-  delete = (url, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> => this.request(
+  delete:HTTPMethod = (url, options = {}) => this.request(
     url,
     { ...options, method: METHODS.DELETE },
     options.timeout,

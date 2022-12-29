@@ -1,11 +1,10 @@
 import tmpl from './template';
-// import Handlebars from 'handlebars/dist/handlebars.runtime';
 import './send-message.scss';
 import Component from '../../../modules/component';
+import IComponent from '../../../interfaces/interface';
 
-// Handlebars.registerPartial('search', template);
-export default class SendMessage extends Component {
-  constructor(props) {
+export default class SendMessage extends Component<IComponent> {
+  constructor(props:IComponent) {
     super('form', props);
   }
 

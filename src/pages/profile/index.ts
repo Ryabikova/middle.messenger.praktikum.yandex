@@ -1,5 +1,4 @@
 import tmpl from './template';
-// import Handlebars from 'handlebars/dist/handlebars.runtime';
 import './profile.scss';
 import Component from '../../modules/component';
 import FormProfile from './form';
@@ -7,17 +6,18 @@ import ButtonCircle from '../../components/button-circle';
 import ChangeAvatar from './change-avatar';
 import TextField from '../../components/text-field';
 import Button from '../../components/button';
-import { gValidation as V } from '../../utils/validation';
+import Validation from '../../utils/validation';
+import IComponent from '../../interfaces/interface';
 
-// Handlebars.registerPartial('search', template);
-export default class Profile extends Component {
-  constructor(props) {
-    super('div', props);
-  }
+interface IProfile extends IComponent {
+  back?: ButtonCircle;
+  changeAvatar?: ChangeAvatar;
+  form?: FormProfile;
+}
 
-  render() {
-    this.children.back = new ButtonCircle({
-      type: 'button',
+export default class Profile extends Component<IProfile> {
+  constructor(props:IProfile) {
+    props.back = new ButtonCircle({
       icon: 'fa-solid fa-arrow-left',
       events: {
         click: (e) => {
@@ -25,18 +25,70 @@ export default class Profile extends Component {
         },
       },
     });
-    this.children.changeAvatar = new ChangeAvatar({});
-    this.children.form = new FormProfile({
-      email: new TextField({ type: 'text', name: 'email', label: 'Почта' }),
-      login: new TextField({ type: 'text', name: 'login', label: 'Логин' }),
-      firstName: new TextField({ type: 'text', name: 'first_name', label: 'Имя' }),
-      secondName: new TextField({ type: 'text', name: 'second_name', label: 'Фамилия' }),
-      phone: new TextField({ type: 'text', name: 'phone', label: 'Телефон' }),
-      oldPassword: new TextField({ type: 'password', name: 'password', label: 'Старый пароль' }),
+    props.changeAvatar = new ChangeAvatar({});
+    props.form = new FormProfile({
+      email: new TextField({
+        error: 'Некорректный email',
+        type: 'text',
+        name: 'email',
+        label: 'Почта',
+        events: {
+          blur: Validation.validateShow,
+        },
+      }),
+      login: new TextField({
+        error: 'Некорректный логин',
+        type: 'text',
+        name: 'login',
+        label: 'Логин',
+        events: {
+          blur: Validation.validateShow,
+        },
+      }),
+      firstName: new TextField({
+        error: 'Некорректное имя',
+        type: 'text',
+        name: 'first_name',
+        label: 'Имя',
+        events: {
+          blur: Validation.validateShow,
+        },
+      }),
+      secondName: new TextField({
+        error: 'Некорректная фамилия',
+        type: 'text',
+        name: 'second_name',
+        label: 'Фамилия',
+        events: {
+          blur: Validation.validateShow,
+        },
+      }),
+      phone: new TextField({
+        error: 'Некорректный телефон',
+        type: 'text',
+        name: 'phone',
+        label: 'Телефон',
+        events: {
+          blur: Validation.validateShow,
+        },
+      }),
+      oldPassword: new TextField({
+        error: 'Некорректный пароль',
+        type: 'password',
+        name: 'password',
+        label: 'Старый пароль',
+        events: {
+          blur: Validation.validateShow,
+        },
+      }),
       newPassword: new TextField({
+        error: 'Некорректный пароль',
         type: 'password',
         name: 'new_password',
         label: 'Новый пароль',
+        events: {
+          blur: Validation.validateShow,
+        },
       }),
       button: new Button({
         label: 'Сохранить',
@@ -44,36 +96,14 @@ export default class Profile extends Component {
       events: {
         submit: (e) => {
           e.preventDefault();
-          const formElement = e.target;
-          const formData = new FormData(formElement);
-          console.log('formData :>> ', formData);
-          const email = formData.get('email');
-          console.log('email :>> ', email);
-          const login = formData.get('login');
-          console.log('login :>> ', login);
-          const firstName = formData.get('first_name');
-          console.log('firstName :>> ', firstName);
-          const secondName = formData.get('second_name');
-          console.log('secondName :>> ', secondName);
-          const phone = formData.get('phone');
-          console.log('phone :>> ', phone);
-          const oldPassword = formData.get('password');
-          console.log('oldPassword :>> ', oldPassword);
-          const newPassword = formData.get('new_password');
-          console.log('newPassword :>> ', newPassword);
-          if (V.fValidatePswd(oldPassword.toString()) && V.fValidateLogin(login.toString())
-            && V.fValidateEmail(email.toString()) && V.fValidateName(firstName.toString())
-            && V.fValidateName(secondName.toString()) && V.fValidatePhone(phone.toString())
-            && V.fValidatePswd(newPassword.toString())) {
-            console.log('form: Valid');
-          }
+          Validation.validateForm();
         },
       },
     });
-    return this.compile(tmpl, {
-      back: this.props.back,
-      changeAvatar: this.props.changeAvatar,
-      form: this.props.form,
-    });
+    super('div', props);
+  }
+
+  render() {
+    return this.compile(tmpl, this.props);
   }
 }

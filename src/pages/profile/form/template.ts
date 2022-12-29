@@ -5,7 +5,7 @@ const tmpl = `
     {{{secondName}}}
     {{{phone}}}
     <div class="profile__pswd">
-        <div class="text-defult">Изменить пароль</div>
+        <p class="text-defult">Изменить пароль</p>
         {{{oldPassword}}}
         {{{newPassword}}}
     </div>

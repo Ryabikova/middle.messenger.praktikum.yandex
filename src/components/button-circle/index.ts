@@ -1,9 +1,13 @@
 import tmpl from './template';
 import './button-circle.scss';
 import Component from '../../modules/component';
+import IComponent from '../../interfaces/interface';
 
-export default class ButtonCircle extends Component {
-  constructor(props) {
+interface IButton extends IComponent {
+  icon: string;
+}
+export default class ButtonCircle extends Component<IButton> {
+  constructor(props:IButton) {
     super('div', props);
   }
 

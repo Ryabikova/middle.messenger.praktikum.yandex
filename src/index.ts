@@ -7,7 +7,7 @@ import render from './utils/renderDOM';
 
 import Button from './components/button';
 import Nav from './components/nav';
-import { gValidation as V } from './utils/validation';
+import Validation from './utils/validation';
 
 import './style/style.scss';
 
@@ -28,8 +28,10 @@ function template(name, templateFunction) {
 
 template('home', () => {
   const nav = new Nav({
-    class: 'nav',
-    settings: { withInternalID: true },
+    attr: {
+      class: 'nav',
+    },
+    settings: { withInternalID: false },
     links: [
       { href: '/#/auth', label: 'Страница авторизации' },
       { href: '/#/registration', label: 'Страница регистрации' },
@@ -50,13 +52,13 @@ template('singIn', () => {
     events: {
       submit: (e) => {
         e.preventDefault();
-        const formElement = e.target;
+        const formElement = e.target as HTMLFormElement;
         const formData = new FormData(formElement);
-        const login = formData.get('login');
+        const login = formData.get('login') || '';
         console.log('login :>> ', login);
-        const password = formData.get('password');
+        const password = formData.get('password') || '';
         console.log('password :>> ', password);
-        if (password.toString() && V.fValidateLogin(login.toString())) {
+        if (password.toString() && login.toString()) {
           console.log('form: Valid');
         }
       },
@@ -73,28 +75,7 @@ template('singUp', () => {
     events: {
       submit: (e) => {
         e.preventDefault();
-        const formElement = e.target;
-        const formData = new FormData(formElement);
-        const email = formData.get('email');
-        console.log('email :>> ', email);
-        const login = formData.get('login');
-        console.log('login :>> ', login);
-        const firstName = formData.get('first_name');
-        console.log('firstName :>> ', firstName);
-        const secondName = formData.get('second_name');
-        console.log('secondName :>> ', secondName);
-        const phone = formData.get('phone');
-        console.log('phone :>> ', phone);
-        const password = formData.get('password');
-        console.log('password :>> ', password);
-        const repeatPassword = formData.get('repeat_password');
-        console.log('repeatPassword :>> ', repeatPassword);
-        if (V.fValidatePswd(password.toString()) && V.fValidateLogin(login.toString())
-            && V.fValidateEmail(email.toString()) && V.fValidateName(firstName.toString())
-            && V.fValidateName(secondName.toString()) && V.fValidatePhone(phone.toString())
-            && V.fValidatePswd(repeatPassword.toString())) {
-          console.log('form: Valid');
-        }
+        Validation.validateForm();
       },
     },
   });

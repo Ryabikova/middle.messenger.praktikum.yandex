@@ -1,11 +1,10 @@
 import tmpl from './template';
-// import Handlebars from 'handlebars/dist/handlebars.runtime';
 import './search.scss';
 import Component from '../../modules/component';
+import IComponent from '../../interfaces/interface';
 
-// Handlebars.registerPartial('search', template);
-export default class Search extends Component {
-  constructor(props) {
+export default class Search extends Component<IComponent> {
+  constructor(props:IComponent) {
     super('div', props);
   }
 

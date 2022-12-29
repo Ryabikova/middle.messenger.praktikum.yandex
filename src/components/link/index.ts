@@ -1,16 +1,18 @@
 import tmpl from './template';
-// import Handlebars from 'handlebars/dist/handlebars.runtime';
 import './link.scss';
 import Component from '../../modules/component';
+import IComponent from '../../interfaces/interface';
 
-// Handlebars.registerPartial('input', template);
-
-export default class Link extends Component {
-    constructor(props) {
-      super('div', props);
-    }
-  
-    render() {
-      return this.compile(tmpl, this.props);
-    }
+interface ILink extends IComponent {
+  label: string;
+  href: string;
+}
+export default class Link extends Component<ILink> {
+  constructor(props: ILink) {
+    super('div', props);
   }
+
+  render() {
+    return this.compile(tmpl, this.props);
+  }
+}
