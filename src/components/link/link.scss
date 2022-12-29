@@ -1,0 +1,10 @@
+@import  '../../style/glob/color.scss';
+.link {
+    color: $color-blue;
+    text-decoration: none;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19px;
+    padding-bottom: 10px;
+}

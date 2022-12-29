@@ -54,7 +54,8 @@ h1 {
     line-height: 19px;
     padding-bottom: 10px;
 }
-.frm {
+.form {
+    padding-top: 128px;
     &__input {
         padding-top: 24px;
     }
@@ -80,4 +81,25 @@ h1 {
         font-size: 20px;
     }
 
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    > li {
+        padding: 0;
+        margin: 0;
+        
+    }
+}
+nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    > li {
+        padding: 0;
+        margin: 0;
+        
+    }
 }
