@@ -2,7 +2,6 @@
 .profile {
     display: flex;
     &__link-back {
-        // width: 64;
         padding: 0 14px;
         height: 100vh;
         display: flex;
@@ -18,40 +17,26 @@
         flex-direction: column;
         width: 510px;
     }
-    &__avatar-container {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        color: $color-black;
-        
-    }
-    &__avatar {
-        background-color: $color-gray;
-        border-radius: 50%;
-        cursor: pointer;
-        width: 130px;
-        height: 130px;
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        align-items: center;
-        margin-bottom: 20px;
-        .fa-camera {
-            color: $color-blue;
-            font-size: 46px;
-        }
-       
-    }
     &__info {
         width: 510px;
     }
     &__pswd {
+        width: 100%;
         padding-top: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
     &__action {
         width: 100%;
         padding-top: 20px;
         display: flex;
         justify-content: center;
+    }
+        .Input {
+            margin-bottom: 20px;
+        }
+    .change-avatar {
+        margin-bottom: 20px;
     }
 }
